@@ -35,26 +35,26 @@ class AspectRatioSelectorForSDXL(scripts.Script):
             with gr.Accordion("Aspect Ratio Selector", open=True):
                 aspect_ratio = gr.Radio(choices=list(self.aspect_ratio_map.keys()), value='Square (1:1)')
 
-        # Ignore the error if the attribute is not present
-        with contextlib.suppress(AttributeError):
-
-            def aspect_ratio_change_listener(choice):
-                pixels = 1024 * 1024
-                tup = self.aspect_ratio_map[choice]
-                height_ = int(math.sqrt(pixels / (tup[0] * tup[1]))) * tup[0]
-                width_ = int(pixels / height_)
-                return height_, width_
-
-            if is_img2img:
-                aspect_ratio.click(
-                    fn=aspect_ratio_change_listener,
-                    inputs=[aspect_ratio],
-                    outputs=[self.i2i_h, self.i2i_w])
-            else:
-                aspect_ratio.click(
-                    fn=aspect_ratio_change_listener,
-                    inputs=[aspect_ratio],
-                    outputs=[self.t2i_h, self.t2i_w])
+                # Ignore the error if the attribute is not present
+                with contextlib.suppress(AttributeError):
+        
+                    def aspect_ratio_change_listener(choice):
+                        pixels = 1024 * 1024
+                        tup = self.aspect_ratio_map[choice]
+                        height_ = int(math.sqrt(pixels / (tup[0] * tup[1]))) * tup[0]
+                        width_ = int(pixels / height_)
+                        return height_, width_
+        
+                    if is_img2img:
+                        aspect_ratio.click(
+                            fn=aspect_ratio_change_listener,
+                            inputs=[aspect_ratio],
+                            outputs=[self.i2i_h, self.i2i_w])
+                    else:
+                        aspect_ratio.click(
+                            fn=aspect_ratio_change_listener,
+                            inputs=[aspect_ratio],
+                            outputs=[self.t2i_h, self.t2i_w])
 
         return [aspect_ratio]
 
