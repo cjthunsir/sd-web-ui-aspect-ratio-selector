@@ -25,26 +25,28 @@ class AspectRatioSelectorForSDXL(scripts.Script):
         }
 
     def title(self):
-        return "Aspect Ratio For Selector SDXL (Height/Width)"
+        return "Aspect Ratio For Selector SDXL"
 
     def show(self, is_img2img):
         return scripts.AlwaysVisible
 
     def ui(self, is_img2img):
         with gr.Group():
-            with gr.Accordion("Aspect Ratio Selector", open=True):
-                aspect_ratio = gr.Radio(choices=list(self.aspect_ratio_map.keys()), value='Square (1:1)')
+            with gr.Accordion("Aspect Ratio For Selector SDXL", open=True):
+                aspect_ratio = gr.Radio(label='Aspect Ratio (Height/Width)', 
+                                        choices=list(self.aspect_ratio_map.keys()), 
+                                        value='Square (1:1)')
 
                 # Ignore the error if the attribute is not present
                 with contextlib.suppress(AttributeError):
-        
+
                     def aspect_ratio_change_listener(choice):
                         pixels = 1024 * 1024
                         tup = self.aspect_ratio_map[choice]
                         height_ = int(math.sqrt(pixels / (tup[0] * tup[1]))) * tup[0]
                         width_ = int(pixels / height_)
                         return height_, width_
-        
+
                     if is_img2img:
                         aspect_ratio.click(
                             fn=aspect_ratio_change_listener,
