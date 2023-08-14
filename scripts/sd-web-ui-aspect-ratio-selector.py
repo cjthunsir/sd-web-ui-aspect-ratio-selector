@@ -32,14 +32,14 @@ class AspectRatioSelectorForSDXL(scripts.Script):
         super().__init__()
 
     def title(self):
-        return "Aspect Ratio For Selector SDXL"
+        return "Aspect Ratio Selector For SDXL"
 
     def show(self, is_img2img):
         return scripts.AlwaysVisible
 
     def ui(self, is_img2img):
         with gr.Group():
-            with gr.Accordion("Aspect Ratio For Selector SDXL", open=True):
+            with gr.Accordion("Aspect Ratio Selector For SDXL", open=True):
                 aspect_ratio = gr.Radio(label='Aspect Ratio (Height/Width)',
                                         choices=list(ASPECT_RATIO_MAP.keys()),
                                         value='Square (1:1)')
